@@ -1,0 +1,22 @@
+<!-- update_profile.html -->
+{% extends 'student/base.html' %}
+
+{% block title %} Update Profile {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Update Profile</h1>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <button type="submit" class="btn btn-primary mr-2">Update Profile</button>
+                <a href="{% url 'student:student_profile' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

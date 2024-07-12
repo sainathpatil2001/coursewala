@@ -10,6 +10,7 @@ from django.shortcuts import redirect
 from django.contrib.auth import logout
 from django.urls import reverse
 
+
 def home_view(request):
     return render(request, 'login/home.html')
 

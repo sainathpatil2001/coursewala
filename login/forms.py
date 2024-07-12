@@ -30,3 +30,11 @@ class TeacherSignUpForm(UserCreationForm):
             user.save()
             Teacher.objects.create(user=user)
         return user
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['grade', 'major', 'profile_picture', 'bio', 'date_of_birth', 'address', 'phone_number']
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'type': 'date'}),
+        }
