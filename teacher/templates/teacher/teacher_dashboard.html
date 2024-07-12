@@ -1,0 +1,79 @@
+{% extends "teacher/base.html" %}
+{% block title %}Teacher Dashboard{% endblock %}
+{% block content %}
+
+<style>
+    .card {
+        height: 100%;
+        border-radius: 10px; /* Rounded corners for cards */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .card-body {
+        flex-grow: 1; /* Allow the body to expand */
+    }
+    .card-text {
+        overflow: hidden; /* Hide overflowing text */
+        text-overflow: ellipsis; /* Add ellipsis (...) when text overflows */
+    }
+    .truncated-text {
+        max-height: 3.6em; /* Adjust as needed */
+    }
+    .read-more {
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .card-footer {
+        margin-top: auto; /* Push footer to the bottom */
+    }
+</style>
+
+<h1>Your Uploads</h1>
+<div class="row">
+    {% for course in courses %}
+    <div class="col-md-4 d-flex">
+        <div class="card mb-4 w-100">
+            {% if course.course_image %}
+            <img class="card-img-top" src="{{ course.course_image.url }}" alt="Course image">
+            {% else %}
+            <!-- Placeholder image or alternative text if course image is not available -->
+            <div class="card-img-top" style="background-color: #f0f0f0; height: 200px; display: flex; align-items: center; justify-content: center;">
+                No Image Available
+            </div>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ course.title }}</h5>
+                <p class="card-text truncated-text" id="description-{{ course.id }}">{{ course.description | truncatewords:30 }}</p>
+                {% if course.description|length > 30 %}
+                <a href="#" class="btn btn-link read-more" data-id="{{ course.id }}">Read more</a>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <form method="post" action="{% url 'teacher:delete_course' course.id %}" class="w-100">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger w-100">Delete Course</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+  document.querySelectorAll('.read-more').forEach(item => {
+    item.addEventListener('click', event => {
+      event.preventDefault();
+      const courseId = item.getAttribute('data-id');
+      const descriptionElement = document.getElementById(`description-${courseId}`);
+      descriptionElement.classList.toggle('truncated-text');
+      if (item.innerText === 'Read more') {
+        item.innerText = 'Read less';
+      } else {
+        item.innerText = 'Read more';
+      }
+    });
+  });
+</script>
+
+{% endblock %}

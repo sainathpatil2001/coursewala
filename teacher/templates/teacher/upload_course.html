@@ -1,0 +1,118 @@
+{% extends 'teacher/base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="col-md-6 col-lg-4 d-md-block bg-light sidebar">
+      <div class="position-sticky" style="overflow-y: auto; max-height: calc(100vh - 56px); border-radius: 10px;">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <h2 class="nav-link" style="font-size: 24px;">Uploaded Courses</h2>
+          </li>
+          {% for course in uploaded_courses %}
+            <li class="nav-item">
+              <div class="card mb-4" style="width: 100%; height: 250px;">
+                <div class="card-body">
+                  <h5 class="card-title">Course {{ course.course_number }}: {{ course.title }}</h5>
+                  <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 100px;">
+                    {{ course.description|truncatewords:30 }}
+                    <a href="#" class="read-more">Read more</a>
+                  </p>
+                  <p class="card-text">Upload Date: {{ course.upload_date }}</p>
+                  {% if course.course_image %}
+                    <img src="{{ course.course_image.url }}" alt="Course Image" class="img-fluid" style="height: 100px; width: 100px;">
+                  {% endif %}
+                </div>
+              </div>
+            </li>
+          {% empty %}
+            <li class="nav-item">
+              <p>No courses uploaded yet.</p>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="col-md-6 col-lg-8 px-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h2>Upload New Course</h2>
+        </div>
+        <div class="card-body">
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input type="text" id="title" name="title" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea id="description" name="description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="course_image">Course Thumbnail Image:</label>
+              <input type="file" id="course_image" name="course_image" class="form-control-file">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Course</button>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<style>
+  .card {
+    border-radius: 10px; /* Rounded corners for cards */
+    margin-bottom: 20px; /* Space between cards */
+    width: 100%; /* Set a fixed width for cards */
+    height: 250px; /* Set a fixed height for cards */
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+  .card-text {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0; /* Remove default margin */
+    height: 100px; /* Set a fixed height for card text */
+  }
+  .truncated-text {
+    max-height: 3.6em; /* Adjust as needed */
+    overflow: hidden;
+  }
+  .read-more {
+    font-weight: bold;
+    cursor: pointer; /* Make the link clickable */
+  }
+  #sidebar {
+    height: calc(100vh - 56px); /* Adjust height of sidebar */
+    overflow-y: auto;
+    position: sticky;
+    top: 56px; /* Height of navbar */
+    max-height: 800px; /* Increase the max height of the sidebar */
+  }
+</style>
+
+<script>
+  // JavaScript for Read more functionality
+  document.querySelectorAll('.read-more').forEach(item => {
+    item.addEventListener('click', event => {
+      event.preventDefault();
+      const cardText = item.previousElementSibling;
+      cardText.classList.toggle('truncated-text');
+      if (item.innerText === 'Read more') {
+        item.innerText = 'Read less';
+      } else {
+        item.innerText = 'Read more';
+      }
+    });
+  });
+</script>
+
+{% endblock %}

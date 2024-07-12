@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Teacher Dashboard{% endblock %}</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for adjusting header height and other styles */
+        .navbar {
+            min-height: 80px; /* Adjust header height as needed */
+        }
+        .navbar-brand {
+            font-size: 1.5rem; /* Increase font size of navbar brand */
+        }
+        .navbar-nav .nav-link {
+            font-size: 1.2rem; /* Increase font size of navbar links */
+        }
+        .btn-mi {
+            font-size: 1rem; /* Adjust font size of logout button */
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <a class="navbar-brand" href="{% url 'teacher:teacher_dashboard' %}"> Home </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher:teacher_dashboard' %}">Teacher Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher:upload_course' %}">Upload Course</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher:update_course' %}">Update Course</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher:delete_course' %}">Delete Course</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacher:profil' %}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'login:logout' %}" ><button class="btn btn-secondary btn-mi mx-auto d-block" onclick="return confirmLogout()">Logout</button></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+    function confirmLogout() {
+      if (confirm("Are you sure you want to LOGOUT?")) {
+        // Yes, logout
+        console.log("YES LOGOUT");
+        // You can also add code to redirect to the logout URL here
+        window.location.href = "{% url 'login:logout' %}";
+      } else {
+        // No, don't logout
+        console.log("NOT LOGOUT");
+      }
+      return false; // prevent default button behavior
+    }
+    </script>
+</body>
+</html>

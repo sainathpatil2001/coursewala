@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Your Title Here{% endblock %}</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            position: fixed;
+            top: 56px; /* Height of the navbar */
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            padding: 48px 0 0; /* Padding for the height of the navbar */
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #f8f9fa;
+            text-align: center;
+            line-height: 50px;
+        }
+        main {
+            margin-top: 56px; /* Height of the navbar */
+        }
+
+        /* 3D effect for header */
+        .navbar {
+            perspective: 1000px;
+            animation: headerAnimation 5s infinite;
+        }
+        @keyframes headerAnimation {
+            0% { transform: rotateX(0); }
+            25% { transform: rotateX(15deg); }
+            50% { transform: rotateX(0); }
+            75% { transform: rotateX(-15deg); }
+            100% { transform: rotateX(0); }
+        }
+    </style>
+    <!-- Other CSS and scripts -->
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="{% url 'student:student_dashboard' %}">CourseWala</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student:student_dashboard' %}">DashBoard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'student:explore_course' %}">Explore Course</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Profile</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-primary nav-link text-white" href="{% url 'login:logout' %}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">© 2024 Course Wala. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap and other scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Other scripts -->
+</body>
+</html>

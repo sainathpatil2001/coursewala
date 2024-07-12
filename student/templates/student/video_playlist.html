@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Playlist - {{ course.title }}</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-fluid {
+            padding: 0 15px;
+        }
+
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .main-video {
+            flex: 2;
+            margin-right: 20px;
+            max-width: 100%;
+        }
+
+        .video-list {
+            flex: 1;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            height: 80vh;
+            max-width: 100%;
+        }
+
+        .video-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+
+        .video-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .video-card h5 {
+            margin: 0;
+        }
+
+        .video-card p {
+            overflow: hidden; /* Hide overflowing text */
+            text-overflow: ellipsis; /* Add ellipsis (...) when text overflows */
+            max-height: 3.6em; /* Limit to 3 lines */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-video video {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .main-video h2 {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .interaction {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .interaction i {
+            font-size: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .interaction i:hover {
+            color: #007bff;
+        }
+
+        .rating i {
+            color: gold;
+            font-size: 30px; /* Increase font size to 30px */
+        }
+
+        .thumbs i {
+            font-size: 30px; /* Increase font size to 30px */
+        }
+
+        .fa {
+            font-size: 30px; /* Increase font size to 30px */
+        }
+
+        .comments-section {
+            margin-top: 20px;
+        }
+
+        .comment {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .comment .comment-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .comment .comment-body {
+            margin-top: 10px;
+        }
+
+        .comment .comment-body p {
+            margin: 0;
+        }
+
+        .comment .comment-footer {
+            text-align: right;
+            font-size: 0.8em;
+            color: #888;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>{{ course.title }}</h1>
+        <div class="video-container">
+            <div class="main-video">
+                <video id="mainVideoPlayer" controls>
+                    <source src="{{ videos.0.video_file.url }}" type="video/mp4" id="mainVideoSource">
+                    Your browser does not support the video tag.
+                </video>
+                <h2 id="mainVideoTitle">{{ videos.0.title }}</h2>
+                <div class="interaction">
+                    <div class="rating">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star-o"></i> <!-- Use fa-star-o for an empty star -->
+                    </div>
+                    <div class="thumbs ml-3">
+                        <i class="fa fa-thumbs-up"></i>
+                        <i class="fa fa-thumbs-down"></i>
+                        <i class="fa fa-comment ml-3" id="commentIcon"></i>
+                    </div>
+                </div>
+                <p id="mainVideoDescription">{{ videos.0.description }}</p>
+                <div class="comments-section hidden" id="commentsSection">
+                    <!-- Dynamic comments will go here -->
+                </div>
+            </div>
+            <div class="video-list">
+                {% for video in videos %}
+                    <div class="video-card" onclick="playVideo('{{ video.video_file.url }}', '{{ video.title }}', '{{ video.description }}')">
+                        <img src="{% static 'placeholder.jpg' %}" alt="{{ video.title }}">
+                        <h5>{{ video.title }}</h5>
+                        <p class="card-text">{{ video.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery (optional, for Bootstrap features that require JavaScript) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        function playVideo(url, title, description) {
+            var videoPlayer = document.getElementById('mainVideoPlayer');
+            var videoSource = document.getElementById('mainVideoSource');
+            videoSource.src = url;
+            videoPlayer.load();
+            document.getElementById('mainVideoTitle').innerText = title;
+            document.getElementById('mainVideoDescription').innerText = description;
+        }
+
+        document.getElementById('commentIcon').addEventListener('click', function() {
+            var commentsSection = document.getElementById('commentsSection');
+            commentsSection.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

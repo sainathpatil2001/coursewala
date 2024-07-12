@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Profile</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Optional: Custom styles for form adjustments */
+       .form-control {
+            margin-bottom: 10px; /* Adjust spacing between form fields */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Update Profile</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ form.first_name.label_tag }}
+                    <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" value="{{ form.first_name.value }}">
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.last_name.label_tag }}
+                    <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" value="{{ form.last_name.value }}">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ form.email.label_tag }}
+                    <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" value="{{ form.email.value }}">
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.phone_number.label_tag }}
+                    <input type="tel" class="form-control" id="{{ form.phone_number.id_for_label }}" name="{{ form.phone_number.name }}" value="{{ form.phone_number.value }}">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.address.label_tag }}
+                <textarea class="form-control" id="{{ form.address.id_for_label }}" name="{{ form.address.name }}">{{ form.address.value }}</textarea>
+            </div>
+            <div class="form-group">
+                {{ form.biography.label_tag }}
+                <textarea class="form-control" id="{{ form.biography.id_for_label }}" name="{{ form.biography.name }}">{{ form.biography.value }}</textarea>
+            </div>
+            <div class="form-group">
+                {{ form.profile_picture.label_tag }}
+                <input type="file" class="form-control-file" id="{{ form.profile_picture.id_for_label }}" name="{{ form.profile_picture.name }}">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ form.date_of_birth.label_tag }}
+                    <input type="date" class="form-control" id="{{ form.date_of_birth.id_for_label }}" name="{{ form.date_of_birth.name }}" value="{{ form.date_of_birth.value }}">
+                </div>
+                <div class="form-group col-md-6">
+                    {{ form.education.label_tag }}
+                    <input type="text" class="form-control" id="{{ form.education.id_for_label }}" name="{{ form.education.name }}" value="{{ form.education.value }}">
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form.experience.label_tag }}
+                <textarea class="form-control" id="{{ form.experience.id_for_label }}" name="{{ form.experience.name }}">{{ form.experience.value }}</textarea>
+            </div>
+            <button  onclick="alt()" type="submit" class="btn btn-primary btn-mi mx-auto d-block">Update</button>
+
+        </form>
+        <button type="submit" class="btn btn-primary btn-mi mx-auto d-block my-3">Cancel</button>
+    </div>
+
+    <!-- Bootstrap JS and dependencies (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function alt(){
+
+    window.alert("Your information is updated !");
+    }
+</script>
+</body>
+</html>

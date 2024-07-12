@@ -1,0 +1,48 @@
+{% extends "teacher/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-2">
+      <!-- Sidebar menu -->
+<!--      <div class="list-group" style="position: fixed; top: 50px; left: 0; width: 200px; height: 100vh; overflow-y: auto; background-color: #f0f0f0; padding: 20px;">
+        <a href="{% url 'teacher:update_profile' %}" class="btn btn-block btn-primary">Update Profile</a>
+      </div>-->
+    </div>
+    <div class="col-md-10 offset-md-2">
+      <div class="card">
+        <div class="card-header">
+          <h2>{{ teacher.first_name }} {{ teacher.last_name }}</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              {% if teacher.profile_picture %}
+              <img src="{{ teacher.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle">
+              {% endif %}
+            </div>
+            <div class="col-md-8">
+              <p><strong>Email:</strong> {{ teacher.email }}</p>
+              <p><strong>Phone Number:</strong> {{ teacher.phone_number }}</p>
+              <p><strong>Address:</strong> {{ teacher.address }}</p>
+            </div>
+          </div>
+          <hr>
+          <h4>About Me</h4>
+          <p>{{ teacher.biography }}</p>
+          <h4>Education</h4>
+          <p>{{ teacher.education }}</p>
+          <h4>Experience</h4>
+          <p>{{ teacher.experience }}</p>
+       <a href="{% url 'teacher:update_profile' %}" class="btn btn-block btn-primary my-6">Update Profile</a>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% include "login/footer_base.html" %}
+<!DOCTYPE html>
+<html>
+    
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .card {
+            margin: 20px;
+        }
+        .card-header {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to the Learning Platform</h1>
+            <p>Choose your role to sign up or sign in</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Student
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Sign up or sign in as a student to access courses, assignments, and more.</p>
+                        <a href="{% url 'login:student_signup' %}" class="btn btn-primary">Sign Up</a>
+                        <a href="{% url 'login:student_login' %}?next={% url 'login:student_dashboard' %}" class="btn btn-outline-primary ml-2">Sign In</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        Teacher
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Sign up or sign in as a teacher to manage courses, assignments, and more.</p>
+                        <a href="{% url 'login:teacher_signup' %}" class="btn btn-primary">Sign Up</a>
+                        <a href="{% url 'login:teacher_login' %}?next={% url 'teacher:teacher_dashboard' %}" class="btn btn-outline-primary ml-2">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
