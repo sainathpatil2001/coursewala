@@ -12,10 +12,23 @@ from .models import Video
 
 import os
 from django.conf import settings
+
+from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Course
+from login.models import Teacher  # Adjust the import path as per your project structure
+
 @login_required
 def teacher_dashboard(request):
-    courses = Course.objects.filter(teacher=request.user.teacher_profile)
+    try:
+        teacher_profile = request.user.teacher_profile
+        courses = Course.objects.filter(teacher=teacher_profile)
+    except Teacher.DoesNotExist:
+        # Handle case where the teacher profile doesn't exist
+        courses = []
+
     return render(request, 'teacher/teacher_dashboard.html', {'courses': courses})
+
 
 @login_required
 def upload_course(request):

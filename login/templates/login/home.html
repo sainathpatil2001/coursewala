@@ -38,7 +38,7 @@
                     <div class="card-body">
                         <p class="card-text">Sign up or sign in as a student to access courses, assignments, and more.</p>
                         <a href="{% url 'login:student_signup' %}" class="btn btn-primary">Sign Up</a>
-                        <a href="{% url 'login:student_login' %}?next={% url 'login:student_dashboard' %}" class="btn btn-outline-primary ml-2">Sign In</a>
+                        <a href="{% url 'login:student_login' %}?next={% url 'login:student_login' %}" class="btn btn-outline-primary ml-2">Sign In</a>
                     </div>
                 </div>
             </div>
